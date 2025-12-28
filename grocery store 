@@ -1,0 +1,76 @@
+# Grocery Store Management System
+
+items = {
+    1: {"name": "Rice (1kg)", "price": 60},
+    2: {"name": "Milk (1L)", "price": 50},
+    3: {"name": "Bread", "price": 40},
+    4: {"name": "Sugar (1kg)", "price": 45}
+}
+
+def show_items():
+    print("\nAvailable Grocery Items:")
+    print("--------------------------------")
+    for key, value in items.items():
+        print(f"{key}. {value['name']} - ₹{value['price']}")
+    print("--------------------------------")
+
+def purchase(mode):
+    cart = []
+    total = 0
+
+    while True:
+        show_items()
+        choice = int(input("Enter item number (0 to finish): "))
+
+        if choice == 0:
+            break
+
+        if choice in items:
+            qty = int(input("Enter quantity: "))
+            price = items[choice]["price"] * qty
+            total += price
+            cart.append((items[choice]["name"], qty, price))
+        else:
+            print("Invalid choice!")
+
+    print("\n----- BILL -----")
+    for item in cart:
+        print(f"{item[0]} x {item[1]} = ₹{item[2]}")
+
+    if mode == "online":
+        delivery_charge = 30
+        print("Delivery Charge = ₹30")
+        total += delivery_charge
+
+    print("Total Amount = ₹", total)
+    print("----------------")
+
+def main():
+    while True:
+        print("\nSMART GROCERY STORE")
+        print("1. Online Purchase")
+        print("2. Offline Purchase")
+        print("3. Exit")
+
+        option = int(input("Enter your choice: "))
+
+        if option == 1:
+            print("\nONLINE PURCHASE")
+            name = input("Enter customer name: ")
+            address = input("Enter delivery address: ")
+            purchase("online")
+            print("Order will be delivered soon!")
+
+        elif option == 2:
+            print("\nOFFLINE PURCHASE")
+            purchase("offline")
+            print("Thank you for shopping with us!")
+
+        elif option == 3:
+            print("Thank you! Visit again.")
+            break
+
+        else:
+            print("Invalid option!")
+
+main()
